@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1>Generate RSA KEY</h1>
+        </div>
+        <form>
+        <div class="panel-body">
+              <div class="form-group col-md-6">
+                <label>Nilai P</label>
+                <input type="text" id="p" class="prima form-control" placeholder="Bilangan prima nilai P">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Nilai Q</label>
+                <input type="text" id="q" class="prima form-control" placeholder="Bilangan prima nilai Q">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Nilai N</label>
+                <input type="text" id="n" class="form-control" placeholder="Nilai N">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Nilai M</label>
+                <input type="text" id="m" class="form-control" placeholder="Nilai M">
+              </div>
+              <div class="form-group col-md-12">
+                <label>Public Key (E)</label>
+                <input type="text" id="e" class="form-control">
+              </div>
+              <div class="form-group col-md-12">
+                <label>Private Key (D)</label>
+                <input type="text" id="d" class="form-control">
+              </div>
+        </div>
+        </form>
+      </div>
+
+</div> <!-- /container -->
+{% endblock %}
+
+{% block c_js %}
+
+<script type="text/javascript">
+  $( ".prima" ).change(function() {
+    if (!(!$("#p").val() || !$("#q").val())) {
+      $.post( '{{url_for("generate")}}', { p: $("#p").val(), q: $("#q").val() })
+        .done(function( data ) {
+          $("#n").val(data.n);
+          $("#m").val(data.m);
+          $("#e").val(data.e);
+          $("#d").val(data.d);
+        });
+    }
+  });
+</script>
+
+{% endblock %}
