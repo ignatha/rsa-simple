@@ -19,19 +19,79 @@
               </div>
               <div class="form-group col-md-6">
                 <label>Nilai N</label>
-                <input type="text" id="n" class="form-control" placeholder="Nilai N">
+                <input type="text" id="n" class="form-control" placeholder="Nilai N" readonly>
               </div>
               <div class="form-group col-md-6">
                 <label>Nilai M</label>
-                <input type="text" id="m" class="form-control" placeholder="Nilai M">
+                <input type="text" id="m" class="form-control" placeholder="Nilai M" readonly>
               </div>
               <div class="form-group col-md-12">
                 <label>Public Key (E)</label>
-                <input type="text" id="e" class="form-control">
+                <input type="text" id="e" class="form-control" readonly>
               </div>
               <div class="form-group col-md-12">
                 <label>Private Key (D)</label>
-                <input type="text" id="d" class="form-control">
+                <input type="text" id="d" class="form-control" readonly>
+              </div>
+        </div>
+        </form>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1>Enkripsi</h1>
+        </div>
+        <form>
+        <div class="panel-body">
+              <div class="form-group col-md-6">
+                <label>Public Key (E)</label>
+                <input type="text" id="public_key" class="key form-control">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Nilai N</label>
+                <input type="text" id="nilai_n" class="key form-control">
+              </div>
+              <div class="form-group col-md-12">
+                <label>Plain Text</label>
+                <textarea id="plain_text" rows="10" class="key form-control"></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Plaint Text ASCII</label>
+                <textarea id="plain_text_ascii" rows="10" class="form-control" readonly></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Decrypt</label>
+                <textarea id="decrypt" rows="10" class="form-control" readonly></textarea>
+              </div>
+        </div>
+        </form>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1>Decrypt</h1>
+        </div>
+        <form>
+        <div class="panel-body">
+              <div class="form-group col-md-6">
+                <label>Private Key (D)</label>
+                <input type="text" id="private_key" class="key_dec form-control">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Nilai N</label>
+                <input type="text" id="nilai_n_decrypt" class="key_dec form-control">
+              </div>
+              <div class="form-group col-md-12">
+                <label>Ciphertext</label>
+                <textarea id="cipher_text" rows="10" class="key_dec form-control"></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Plaint Text ASCII</label>
+                <textarea id="plain_text_ascii_decrypt" rows="10" class="form-control" readonly></textarea>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Plaintext</label>
+                <textarea id="plain_text_decrypt" rows="10" class="form-control" readonly></textarea>
               </div>
         </div>
         </form>
@@ -51,6 +111,30 @@
           $("#m").val(data.m);
           $("#e").val(data.e);
           $("#d").val(data.d);
+        });
+    }
+  });
+
+  $( ".key" ).change(function() {
+    if (!(!$("#public_key").val() || !$("#nilai_n").val() || !$("#plain_text").val())) {
+      $.post( '{{url_for("enkripsi")}}', { public_key: $("#public_key").val(), nilai_n: $("#nilai_n").val(),plain_text: $("#plain_text").val() })
+        .done(function( data ) {
+            var ascii = data.plain_text_ascii;
+            var cipher = data.decrypt;
+            $("#plain_text_ascii").val(ascii.join(" "));
+            $("#decrypt").val(cipher.join(" "));
+        });
+    }
+  });
+
+  $( ".key_dec" ).change(function() {
+    if (!(!$("#private_key").val() || !$("#nilai_n_decrypt").val() || !$("#cipher_text").val())) {
+      $.post( '{{url_for("decrypt")}}', { private_key: $("#private_key").val(), nilai_n_decrypt: $("#nilai_n_decrypt").val(),cipher_text: $("#cipher_text").val() })
+        .done(function( data ) {
+            var ascii = data.plain_text_ascii;
+            var plainText = data.plaintext;
+            $("#plain_text_ascii_decrypt").val(ascii.join(" "));
+            $("#plain_text_decrypt").val(plainText.join(''));
         });
     }
   });
