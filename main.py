@@ -27,8 +27,8 @@ def enkripsi():
 	e = request.form['public_key']
 	n = request.form['nilai_n']
 	text = request.form['plain_text']
-	plainText = [long(ord(c)) for c in text]
-	cipherText = [long(pow(s,long(e),long(n))) for s in plainText] 
+	plainText = [int(ord(c)) for c in text]
+	cipherText = [int(pow(s,int(e),int(n))) for s in plainText] 
 
 	data = {
 		"plain_text_ascii":plainText,
@@ -44,7 +44,7 @@ def decrypt():
 	n = request.form['nilai_n_decrypt']
 	text = request.form['cipher_text']
 	ciphertext = text.split(' ')
-	plain_text_ascii = [long(pow(long(s),long(d),long(n))) for s in ciphertext]
+	plain_text_ascii = [int(pow(int(s),int(d),int(n))) for s in ciphertext]
 	plainText = [chr(c) for c in plain_text_ascii] 
 
 	data = {
