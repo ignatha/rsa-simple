@@ -20,6 +20,8 @@ python main.py
 ```
 
 ## NB
+- Di testing di Python 3.7
+- Angka prima yang dimasukkan untuk nilai P dan Q minimal 3 digit
 - public key yang dihasilkan adalah pubic key dengan 5 digit angka, antara 10000 - 99999
 - Bonus script untuk looping blangan prima di file `prime.py`, tinggal ganti batasan nilai dari angka prima yang diinginkan
 - Jangan memasukkan nilai terlalu besar
