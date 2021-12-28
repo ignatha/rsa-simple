@@ -4,7 +4,7 @@ import timeit
 import random
 
 class rsa:
-   'rsa_bowo Kriptografi'
+   'rsa_ignatha Kriptografi'
    n,m,e,d=0,0,0,0
 
    def __init__(self, p, q):
