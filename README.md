@@ -26,3 +26,4 @@ python main.py
 - Bonus script untuk looping blangan prima di file `prime.py`, tinggal ganti batasan nilai dari angka prima yang diinginkan
 - Jangan memasukkan nilai terlalu besar
 - Kerusakan karena memaksa komputer menghitung angka terlalu besar bukan tanggung jawab kami
+- Jangan lupa trakteer admin secangkir kopi 😃 [Trakteer](https://trakteer.id/ignatha/tip)
