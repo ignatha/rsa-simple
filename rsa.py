@@ -21,13 +21,11 @@ class rsa:
 
    # set Public key E
    def setE(self):
-      list = []
       for x in range(10000,99999):
          c = Gcd.computeGCD(x,self.m)
          if c == 1:
-            list.append(x)
-
-      self.e = random.choice(list)
+            self.e = x
+            break
 
    # set Private Key
    def setD(self):
