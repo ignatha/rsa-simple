@@ -4,7 +4,7 @@ import timeit
 import random
 
 class rsa:
-   'rsa_ignatha Kriptografi'
+   'rsa_bowo Kriptografi'
    n,m,e,d=0,0,0,0
 
    def __init__(self, p, q):
@@ -21,12 +21,14 @@ class rsa:
 
    # set Public key E
    def setE(self):
-      for x in range(10000,99999):
-         c = Gcd.computeGCD(x,self.m)
-         if c == 1:
-            self.e = x
-            break
-
+       start = [*range(1000,9000)]
+       start = random.choice(start)
+       for x in range(start,99999):
+           c = Gcd.computeGCD(x,self.m)
+           if c == 1:
+               self.e = x
+               break
+           
    # set Private Key
    def setD(self):
       i,o = 1,False
