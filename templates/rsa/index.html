@@ -18,20 +18,12 @@
                 <input type="text" id="q" class="prima form-control" placeholder="Bilangan prima nilai Q, min 3 digit">
               </div>
               <div class="form-group col-md-6">
-                <label>Nilai N</label>
-                <input type="text" id="n" class="form-control" placeholder="Nilai N" readonly>
+                <label>Public Key</label>
+                <input type="text" id="public" class="form-control" placeholder="Nilai N" readonly>
               </div>
               <div class="form-group col-md-6">
-                <label>Nilai M</label>
-                <input type="text" id="m" class="form-control" placeholder="Nilai M" readonly>
-              </div>
-              <div class="form-group col-md-12">
-                <label>Public Key (E)</label>
-                <input type="text" id="e" class="form-control" readonly>
-              </div>
-              <div class="form-group col-md-12">
-                <label>Private Key (D)</label>
-                <input type="text" id="d" class="form-control" readonly>
+                <label>Private Key</label>
+                <input type="text" id="private" class="form-control" placeholder="Nilai M" readonly>
               </div>
         </div>
         </form>
@@ -44,12 +36,8 @@
         <form>
         <div class="panel-body">
               <div class="form-group col-md-6">
-                <label>Public Key (E)</label>
-                <input type="text" id="public_key" class="key form-control">
-              </div>
-              <div class="form-group col-md-6">
-                <label>Nilai N</label>
-                <input type="text" id="nilai_n" class="key form-control">
+                <label>Public Key</label>
+                <input type="text" id="en_public" class="key form-control">
               </div>
               <div class="form-group col-md-12">
                 <label>Plain Text</label>
@@ -74,12 +62,8 @@
         <form>
         <div class="panel-body">
               <div class="form-group col-md-6">
-                <label>Private Key (D)</label>
-                <input type="text" id="private_key" class="key_dec form-control">
-              </div>
-              <div class="form-group col-md-6">
-                <label>Nilai N</label>
-                <input type="text" id="nilai_n_decrypt" class="key_dec form-control">
+                <label>Private Key</label>
+                <input type="text" id="en_private" class="key_dec form-control">
               </div>
               <div class="form-group col-md-12">
                 <label>Ciphertext</label>
@@ -107,17 +91,15 @@
     if (!(!$("#p").val() || !$("#q").val())) {
       $.post( '{{url_for("generate")}}', { p: $("#p").val(), q: $("#q").val() })
         .done(function( data ) {
-          $("#n").val(data.n);
-          $("#m").val(data.m);
-          $("#e").val(data.e);
-          $("#d").val(data.d);
+          $("#public").val(data.public_key);
+          $("#private").val(data.private_key);
         });
     }
   });
 
   $( ".key" ).change(function() {
-    if (!(!$("#public_key").val() || !$("#nilai_n").val() || !$("#plain_text").val())) {
-      $.post( '{{url_for("enkripsi")}}', { public_key: $("#public_key").val(), nilai_n: $("#nilai_n").val(),plain_text: $("#plain_text").val() })
+    if (!(!$("#en_public").val() || !$("#plain_text").val())) {
+      $.post( '{{url_for("enkripsi")}}', { public_key: $("#en_public").val(), plain_text: $("#plain_text").val() })
         .done(function( data ) {
             var ascii = data.plain_text_ascii;
             var cipher = data.decrypt;
@@ -128,8 +110,8 @@
   });
 
   $( ".key_dec" ).change(function() {
-    if (!(!$("#private_key").val() || !$("#nilai_n_decrypt").val() || !$("#cipher_text").val())) {
-      $.post( '{{url_for("decrypt")}}', { private_key: $("#private_key").val(), nilai_n_decrypt: $("#nilai_n_decrypt").val(),cipher_text: $("#cipher_text").val() })
+    if (!(!$("#en_private").val() || !$("#cipher_text").val())) {
+      $.post( '{{url_for("decrypt")}}', { private_key: $("#en_private").val(), cipher_text: $("#cipher_text").val() })
         .done(function( data ) {
             var ascii = data.plain_text_ascii;
             var plainText = data.plaintext;
